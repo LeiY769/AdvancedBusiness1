@@ -17,6 +17,7 @@ class Node:
 
     def node_value(self):
         return self.value
+
     def addnode_key(self, key):
         self.key = key
 
@@ -29,7 +30,7 @@ class Node:
     def node_next(self):
         return self.next
 
-class Dict:
+class Dict_t:
     def __init__(self):
         self.size = 1000
         self.nbKeys = 0
@@ -51,7 +52,7 @@ class Dict:
     def nb_keys(self):
         return self.nbKeys
     
-    def zize(self):
+    def get_size(self):
         return self.size
 
     def get(self, key):
@@ -59,8 +60,10 @@ class Dict:
         while n and n.node_key() != key:
             n = n.node_next()
         return n
+
     def contains(self, key):
         return self.get(key) != None
+
     def resize(self):
         old_size = self.size
         new_size = old_size * 2
@@ -82,7 +85,7 @@ class Dict:
         
     def insert(self, key, data):
         nb_keys = self.nb_keys()
-        size_hash = self.zize()
+        size_hash = self.get_size()
         percentage = nb_keys / size_hash
 
         if percentage > 0.7:
@@ -100,13 +103,15 @@ class Dict:
             n.next = self.array[i]
             self.array[i] = n
             self.nbKeys += 1
+
+
 car = Dict()
 
 car.insert("aab","baa")
 car.insert("aab","aba")
 print(car.nb_keys())
 car.insert("aab","baa")
-for i in range(car.zize()):
+for i in range(car.get_size()):
     n = car.array[i]
     while n:
         print(f"{n.key}: {n.value}")
