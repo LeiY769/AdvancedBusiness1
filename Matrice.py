@@ -2,12 +2,11 @@ import numpy as np
 import time
 import scipy.sparse as sp
 from collections import defaultdict
-from pprint import pprint
+
 def createMatrix(value):
     A = np.zeros((value,value))
     size = value
-    rang = (value ** 2) //20
-    for i in range(rang):
+    for i in range(5*value):
         row = np.random.randint(0,size)
         column = np.random.randint(0,size)
         value = np.random.randint(0,10)
@@ -107,21 +106,36 @@ def Map_Reduce(A,B,value):
         A_Dict[A1[i][1]].append((A1[i][0],A1[i][2]))
     for i in range(len(B1)):
         B_Dict[B1[i][0]].append((B1[i][1],B1[i][2]))
-    return A_Dict,B_Dict
+    #OKay
+    tempo_Dict = defaultdict(list)
+    for i in range(value):
+        if i in A_Dict and i in B_Dict:
+            for j in A_Dict[i]:
+                for k in B_Dict[i]:
+                    x = j[0]
+                    y = k[0]
+                    value = j[1] *k[1]
+                    tempo_Dict[(x,y)].append(value)
+    C = list()
+    for i ,j in tempo_Dict.items():
+        C.append([i[0],i[1],sum(j)])
+    return C
 
 start_time = time.time()
-value = 100
-A = sp.rand(value,value,0.01)
-B = sp.rand(value,value,0.1)
-A_r = sp.csc_matrix(A)
-B_r = sp.csc_matrix(B)
+value = 1000
+
+A_r = createMatrix(value)
+B_r = createMatrix(value)
 #A.data
 #A.indices
 #A.indptr 
 print("--- %s seconds ---" % (time.time() - start_time))
 start_time = time.time()
-test1,test2 = Map_Reduce(A_r,B_r,value)
-pprint(test1)
+test1 = Map_Reduce(A_r,B_r,value)
+
+print("--- %s seconds ---" % (time.time() - start_time))
+start_time = time.time()
+test1,test2,test3 = MultiplySparseMatrix(A_r,B_r,value)
 
 print("--- %s seconds ---" % (time.time() - start_time))
 
