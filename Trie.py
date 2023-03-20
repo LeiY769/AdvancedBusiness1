@@ -1,3 +1,5 @@
+import string
+
 class TrieNode:
     def __init__(self, char):
         self.char = char
@@ -47,7 +49,10 @@ class Trie(object):
 t = Trie()
 with open("Task1/datasetCNNSTORIES/0a0a4c90d59df9e36ffec4ba306b4f20f3ba4acb.story","r") as file:
     for line in file:
-        for word in line.split():
+        line = line.strip()
+        #line = line.lower()
+        line = line.translate(line.maketrans("", "", string.punctuation))
+        for word in line.split(" "):
             t.insert(word)
 
 t.printtrie()
