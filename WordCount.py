@@ -1,5 +1,7 @@
 from mrjob.job import MRJob
+from mrjob.step import MRStep
 import string
+from heapq import nlargest
 
 class WordCount(MRJob):
 
@@ -15,7 +17,4 @@ class WordCount(MRJob):
         yield(word, sum(counts))
 
 if __name__ == '__main__':
-    WordCount.run()
-    """task = WordCount(args = [])
-    with open("Task1/datasetCNNSTORIES/0a0a4c90d59df9e36ffec4ba306b4f20f3ba4acb.story","r") as file:
-        output = list(mr.runJob(file, task))"""
+    WordCount().run()
