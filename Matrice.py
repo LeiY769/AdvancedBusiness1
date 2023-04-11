@@ -98,31 +98,33 @@ def Change_Format(A,value):
             j += 1
     return new_A
 def Map_Reduce(A,B,value):
-    A1 = Change_Format(A,value)
-    B1 = Change_Format(B,value)
-    A_Dict = defaultdict(list)
-    B_Dict = defaultdict(list)
-    for i in range(len(A1)):
-        A_Dict[A1[i][1]].append((A1[i][0],A1[i][2]))
-    for i in range(len(B1)):
-        B_Dict[B1[i][0]].append((B1[i][1],B1[i][2]))
-    #OKay
+    a1 = Change_Format(A,value)
+    b1 = Change_Format(B,value)
+
+    a_Dict = defaultdict(list)
+    b_Dict = defaultdict(list)
+    for i, (x, y, v) in enumerate(a1):
+        a_Dict[x].append((y, v))
+    for i, (x, y, v) in enumerate(b1):
+        b_Dict[y].append((x, v))
+
     tempo_Dict = defaultdict(list)
     for i in range(value):
-        if i in A_Dict and i in B_Dict:
-            for j in A_Dict[i]:
-                for k in B_Dict[i]:
+        if i in a_Dict and i in b_Dict:
+            for j in a_Dict[i]:
+                for k in b_Dict[i]:
                     x = j[0]
                     y = k[0]
-                    value = j[1] *k[1]
+                    value = j[1] * k[1]
                     tempo_Dict[(x,y)].append(value)
-    C = list()
-    for i ,j in tempo_Dict.items():
-        C.append([i[0],i[1],sum(j)])
-    return C
+
+    c = []
+    for i, j in tempo_Dict.items():
+        c.append([i[0], i[1], sum(j)])
+    return c
 
 start_time = time.time()
-value = 1000
+value = 3
 
 A_r = createMatrix(value)
 B_r = createMatrix(value)
@@ -130,13 +132,15 @@ B_r = createMatrix(value)
 #A.indices
 #A.indptr 
 print("--- %s seconds ---" % (time.time() - start_time))
-start_time = time.time()
-test1 = Map_Reduce(A_r,B_r,value)
+start_time = time.time()                                    
+test4 = Map_Reduce(A_r,B_r,value)
 
 print("--- %s seconds ---" % (time.time() - start_time))
 start_time = time.time()
 test1,test2,test3 = MultiplySparseMatrix(A_r,B_r,value)
-
+test = np.dot(A_r,B_r)
+print(test.data)
+print (test4)
 print("--- %s seconds ---" % (time.time() - start_time))
 
 
