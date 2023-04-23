@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
     nb_files = int(sys.argv[1])
     if nb_files <= 0:
-        print("[ERROR] - Usage: python WordCountScript.py (positive integer that represents the number of files to read)")
+        print("[ERROR] - Usage: python Trie.py (positive integer that represents the number of files to read)")
         sys.exit()
 
     t = Trie()
