@@ -13,6 +13,10 @@ if __name__ == '__main__':
     files = [f for f in os.listdir(directory_path) if f.endswith(file_extension)]
 
     nb_files = int(sys.argv[1])
+    if nb_files <= 0:
+        print("[ERROR] - Usage: python WordCountScript.py (positive integer that represents the number of files to read)")
+        sys.exit()
+
     input_files = random.sample(files, nb_files)
     for i in range(len(input_files)):
         input_files[i] = os.path.join(directory_path, input_files[i])
@@ -44,11 +48,11 @@ if __name__ == '__main__':
             top10_words.append(word)
             top10_values.append(count)
 
-        plt.pie(top10_values, labels=top10_words, autopct='%1.1f%%')
+        labels = [f"{word} ({value})" for word, value in zip(top10_words, top10_values)]
+        plt.pie(top10_values, labels=labels, autopct='%1.1f%%')
         plt.title("Pie Chart for the 10 most frequent words")
+        end_time = time.time()
+        total_time = end_time - end_MR_time
+        print("Total time to get the 10 most frequent words and display the chart:", total_time, "seconds.")
+        print("-------------------------")
         plt.show()
-
-    end_time = time.time()
-    total_time = end_time - end_MR_time
-    print("Total time to get the 10 most frequent words and display the chart:", total_time, "seconds.")
-    print("-------------------------")

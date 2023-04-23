@@ -1,13 +1,11 @@
 from mrjob.job import MRJob
-from mrjob.step import MRStep
 import string
-from heapq import nlargest
 
 class WordCount(MRJob):
 
     def mapper(self, _, line):
         line = line.strip()
-        #line = line.lower()
+        line = line.lower()
         line = line.translate(line.maketrans("", "", string.punctuation))
         for word in line.split(" "):
             if len(word) > 0:
