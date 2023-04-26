@@ -138,8 +138,6 @@ test4 = Map_Reduce(A_r,B_r,value)
 print("--- %s seconds ---" % (time.time() - start_time))
 start_time = time.time()
 test1,test2,test3 = MultiplySparseMatrix(A_r,B_r,value)
-test = np.dot(A_r,B_r)
-print(test.data)
 print (test4)
 print("--- %s seconds ---" % (time.time() - start_time))
 
